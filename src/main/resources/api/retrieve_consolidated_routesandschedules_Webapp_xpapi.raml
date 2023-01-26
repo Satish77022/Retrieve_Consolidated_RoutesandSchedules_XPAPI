@@ -1,0 +1,76 @@
+#%RAML 1.0
+title: Retrieve_Consolidated_RoutesandSchedules_Webapp_XPAPI
+description: This RAML file will retrieve consolidated routes and schedules.
+uses:
+  common: /Commons/common_library.raml
+
+types:
+  routes200response: !include /Routes/Types/routes_200Response_dataType.raml
+  schedules200response: !include /Schedules/Types/schedules_200response_dataType.raml
+  commonerrordatatype: !include /Commons/Types/common_errorResponse_dataType.raml
+
+/booking:
+  /{transportType}:
+    /routes:
+      get:
+        is:
+          - common.transactionid
+          - common.companyName
+          - common.departureLocation
+          - common.destinationLocation
+        responses:
+          200:
+            body:
+              application/json:
+                type: routes200response
+                
+                example: !include /Routes/Examples/routes_200response_example.json
+          400:
+            body:
+              application/json:
+                type: commonerrordatatype
+                example: !include /Commons/Examples/400Response_example.json
+          404:
+            body:
+              application/json:
+                type: commonerrordatatype
+                example: !include /Commons/Examples/404response_example.json
+          500:
+            body:
+              application/json:
+                type: commonerrordatatype
+                example: !include /Commons/Examples/500Response_example.json
+    /schedules:
+      get:
+        is:
+          - common.transactionid
+          - common.companyName
+          - common.departureLocation
+          - common.destinationLocation
+          - common.requestTimezone
+        responses:
+          200:
+            body:
+              application/json:
+                type: schedules200response
+                example: !include /Schedules/Examples/schedules_200response_example.json
+
+          400:
+            body:
+              application/json:
+                type: commonerrordatatype
+                example: !include /Commons/Examples/400Response_example.json
+
+          404:
+            body:
+                application/json:
+                  type: commonerrordatatype
+                  example: !include /Commons/Examples/404response_example.json
+
+          500:
+            body:
+              application/json:
+                type: commonerrordatatype
+                example: !include /Commons/Examples/500Response_example.json
+                       
+              
